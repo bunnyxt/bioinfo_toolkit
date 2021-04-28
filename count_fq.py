@@ -3,7 +3,7 @@
 # Filename: count_fq.py
 # Description: count sequences in fastq file
 # Usage: python3 count_fq.py filename
-# Version: 0.0.1
+# Version: 0.0.2
 # Date: 2021-04-27
 # Author: bunnyxt
 # Link: https://github.com/bunnyxt/bioinfo_toolkit
@@ -14,6 +14,10 @@ if len(sys.argv) < 2:
     print('Please provide fastq filename. Usage: python3 count_fq.py filename')
     exit(1)
 filename = sys.argv[1]
+if not (filename.endswith('.fq') or filename.endswith('.fastq')):
+    input_result = input('File %s does not end with .fq or .fastq, are you sure this is a fastq file? [y/N] ' % filename)
+    if input_result.lower() != 'y':
+        exit(0)
 
 count = 0
 current_stage = 0
