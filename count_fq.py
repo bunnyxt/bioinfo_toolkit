@@ -3,7 +3,7 @@
 # Filename: count_fq.py
 # Description: count sequences in fastq file
 # Usage: python3 count_fq.py filename
-# Version: 0.0.2
+# Version: 0.0.3
 # Date: 2021-04-27
 # Author: bunnyxt
 # Link: https://github.com/bunnyxt/bioinfo_toolkit
@@ -15,7 +15,7 @@ if len(sys.argv) < 2:
     exit(1)
 filename = sys.argv[1]
 if not (filename.endswith('.fq') or filename.endswith('.fastq')):
-    input_result = input('File %s does not end with .fq or .fastq, are you sure this is a fastq file? [y/N] ' % filename)
+    input_result = input('File %s does not end with .fq or .fastq. Are you sure this is a fastq file? [y/N] ' % filename)
     if input_result.lower() != 'y':
         exit(0)
 
@@ -30,7 +30,7 @@ with open(filename, 'r') as f:
             if line.startswith('@'):
                 current_stage += 1
             else:
-                raise RuntimeError('Invalid fastq format detected! First line of one sequence should starts with @!')
+                raise RuntimeError('Invalid fastq format detected! First line of one sequence should start with @!')
         elif current_stage == 1:
             sequence_length = len(line.rstrip('\n'))
             current_stage += 1
@@ -38,7 +38,7 @@ with open(filename, 'r') as f:
             if line.startswith('+'):
                 current_stage += 1
             else:
-                raise RuntimeError('Invalid fastq format detected! Third line of one sequence should starts with +!')
+                raise RuntimeError('Invalid fastq format detected! Third line of one sequence should start with +!')
         elif current_stage == 3:
             quality_length = len(line.rstrip('\n'))
             if quality_length == sequence_length:
